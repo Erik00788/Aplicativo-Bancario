@@ -1,0 +1,17 @@
+bool _podeNotificar = true; // Controla o intervalo
+
+void _tratarMovimento(double x) {
+  // Se houver movimento e não estiver no intervalo de bloqueio
+  if (x > 8 && _podeNotificar) {
+    _podeNotificar = false; 
+    
+    _enviarNotificacao(); // Nível 4
+    print("Notificação enviada!");
+
+    // Regra do Nível 5: Espera 10 segundos para liberar novamente
+    Future.delayed(Duration(seconds: 10), () {
+      _podeNotificar = true;
+      print("Sistema pronto para nova notificação");
+    });
+  }
+}
