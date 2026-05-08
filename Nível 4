@@ -1,0 +1,38 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
+class NotificacaoNivel4 extends StatelessWidget {
+  final _plugin = FlutterLocalNotificationsPlugin();
+
+  // Função simples para disparar a notificação
+  Future<void> enviarNotificacaoLocal() async {
+    // Configuração básica para Android e iOS
+    const settings = InitializationSettings(
+      android: AndroidInitializationSettings('@mipmap/ic_launcher'),
+      iOS: DarwinInitializationSettings(),
+    );
+    await _plugin.initialize(settings);
+
+    // Detalhes da mensagem
+    const details = NotificationDetails(
+      android: AndroidNotificationDetails('canal_id', 'Movimento', 
+          importance: Importance.max, priority: Priority.high),
+    );
+
+    // Exibe a notificação
+    await _plugin.show(
+      1, 
+      "Alerta de Segurança", 
+      "Movimento brusco detectado!", 
+      details
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: enviarNotificacaoLocal,
+      child: Text("Simular Notificação (Nível 4)"),
+    );
+  }
+}
