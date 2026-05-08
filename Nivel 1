@@ -1,0 +1,29 @@
+// nivel 1
+class CameraService {
+  
+  Future<void> solicitarPermissaoCamera() async {
+    
+    var status = await Permission.camera.status;
+
+    if (status.isDenied) {
+      status = await Permission.camera.request();
+    }
+
+  
+    if (status.isGranted) {
+      print("Resultado: Permissão concedida");
+      _iniciarLeituraDeTokenOuQrCode();
+    } else if (status.isPermanentlyDenied) {
+      
+      print("Resultado: Permissão negada permanentemente");
+      openAppSettings(); 
+    } else {
+      print("Resultado: Permissão negada");
+    }
+  }
+
+  void _iniciarLeituraDeTokenOuQrCode() {
+    
+  }
+}
+
