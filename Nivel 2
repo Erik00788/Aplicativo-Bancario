@@ -1,0 +1,30 @@
+import 'package:flutter/material.dart';
+import 'package:sensors_plus/sensors_plus.dart';
+
+class AcelerometroSimples extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        // O StreamBuilder "escuta" o sensor sozinho
+        child: StreamBuilder<AccelerometerEvent>(
+          stream: accelerometerEvents,
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) return CircularProgressIndicator();
+
+            final sensor = snapshot.data!;
+            
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("X: ${sensor.x.toStringAsFixed(2)}", style: TextStyle(fontSize: 24)),
+                Text("Y: ${sensor.y.toStringAsFixed(2)}", style: TextStyle(fontSize: 24)),
+                Text("Z: ${sensor.z.toStringAsFixed(2)}", style: TextStyle(fontSize: 24)),
+              ],
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
